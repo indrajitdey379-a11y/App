@@ -20,9 +20,12 @@ jobs:
 
       - name: Initialize Project & Install Capacitor
         run: |
+          mkdir www
+          cp -r * www/ || true
+          rm -rf www/www www/.git www/.github
           npm init -y
           npm install @capacitor/core @capacitor/cli
-          npx cap init "My Movie App" "com.indra.movieapp" --web-dir .
+          npx cap init "My Movie App" "com.indra.movieapp" --web-dir www
 
       - name: Add Android Platform
         run: |
