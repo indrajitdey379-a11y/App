@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>CINESOCIETY - The Premium Master Database</title>
+    <meta name="description" content="Welcome to CINESOCIETY Reborn V1. The ultimate master database for High-Quality Hollywood, Bollywood, and Anime content.">
+    <meta name="keywords" content="CINESOCIETY, Movies, Anime, Hollywood, Bollywood, HD Movies, Telegram Bot">
+    <meta name="author" content="Indrajit Dey - CINESOCIETY Node">
+    
+    <meta property="og:title" content="CINESOCIETY - Master Database">
+    <meta property="og:description" content="Explore High-Quality Hollywood, Bollywood & Anime Content.">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/050508/f5c518?text=CINESOCIETY+PREMIUM">
+    <meta property="og:type" content="website">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;500;700;900&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* =========================================================
+           1. CORE VARIABLES & PREMIUM COLOR PALETTE
+           ========================================================= */
+        :root {
+            --bg-master: #050508;
+            --cine-gold: #f5c518; 
+            --cine-red: #e50914; 
+            --cine-neon: #00f8ff;
+            --cine-dark: #0a0a0a;
+            --font-3d: 'Cinzel', serif;
+            --font-head: 'Orbitron', sans-serif;
+            --font-body: 'Montserrat', sans-serif;
+            --toast-success: #00b894;
+            --toast-error: #d63031;
+        }
+
+        /* Basic CSS Reset */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        /* =========================================================
+           2. CUSTOM PREMIUM SCROLLBAR
+           ========================================================= */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-master); border-left: 1px solid #111; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--cine-red); }
+
+        /* =========================================================
+           3. DYNAMIC CINEMATIC BACKGROUND
+           ========================================================= */
+        body {
+            font-family: var(--font-body);
+            background: radial-gradient(circle at center, #1a1a24 0%, var(--bg-master) 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Subtle animated stars overlay */
+        .stars-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.1;
+            z-index: -1;
+            animation: twinkle 5s linear infinite alternate;
+        }
+
+        @keyframes twinkle { 0% { opacity: 0.05; } 100% { opacity: 0.2; } }
+
+        /* =========================================================
+           4. EXCLUSIVE PARTICLE EXPLOSION LOADER
+           ========================================================= */
+        #cine-loader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 8, 0.98);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.4s ease, visibility 0.4s;
+        }
+
+        .white-core {
+            position: relative; width: 15px; height: 15px;
+            background: #fff; border-radius: 50%;
+            box-shadow: 0 0 20px #fff;
+            animation: coreBeat 0.8s infinite alternate;
+        }
+
+        .white-core::before, .white-core::after {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 5px; height: 5px; background: #fff; border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .white-core::before { animation: explode1 1.5s infinite ease-out; }
+        .white-core::after { animation: explode2 1.5s infinite ease-out 0.75s; }
+
+        .loader-text {
+            margin-top: 35px; font-family: var(--font-head);
+            font-size: 11px; color: var(--cine-gold); letter-spacing: 3px;
+            animation: pulseText 1.5s infinite; font-weight: bold;
+        }
+
+        @keyframes coreBeat { 0% { transform: scale(0.8); } 100% { transform: scale(1.5); box-shadow: 0 0 40px #fff; } }
+        @keyframes pulseText { 0% { opacity: 0.4; } 100% { opacity: 1; } }
+        
+        @keyframes explode1 {
+            0% { box-shadow: 0 0 0 #fff; opacity: 1; }
+            100% { box-shadow: 0 -80px 0 #fff, 60px -60px 0 #fff, 80px 0 0 #fff, 60px 60px 0 #fff, 0 80px 0 #fff, -60px 60px 0 #fff, -80px 0 0 #fff, -60px -60px 0 #fff; opacity: 0; }
+        }
+        @keyframes explode2 {
+            0% { box-shadow: 0 0 0 var(--cine-neon); opacity: 1; }
+            100% { box-shadow: 0 -100px 0 var(--cine-neon), 70px -70px 0 var(--cine-gold), 100px 0 0 var(--cine-red), 70px 70px 0 var(--cine-neon), 0 100px 0 var(--cine-gold), -70px 70px 0 var(--cine-red), -100px 0 0 var(--cine-neon), -70px -70px 0 var(--cine-gold); opacity: 0; }
+        }
+
+        /* =========================================================
+           5. PROFESSIONAL PREMIUM HEADER & CINEMATIC TITLE
+           ========================================================= */
+        header {
+            text-align: center; padding: 50px 20px 25px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(5,5,8,0) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            position: relative; z-index: 10;
+        }
+
+        .title-premium {
+            font-family: var(--font-3d); font-size: clamp(32px, 6vw, 55px);
+            font-weight: 900; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff 20%, var(--cine-gold) 50%, #fff 80%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0px 4px 20px rgba(245, 197, 24, 0.2);
+            animation: gentleGlow 3s infinite alternate;
+        }
+
+        @keyframes gentleGlow {
+            0% { text-shadow: 0px 4px 15px rgba(245, 197, 24, 0.1); }
+            100% { text-shadow: 0px 4px 25px rgba(245, 197, 24, 0.4); }
+        }
+
+        .sub-title {
+            font-size: 13px; color: #aaa; font-weight: 500; letter-spacing: 2px;
+            max-width: 600px; margin: 0 auto 25px; line-height: 1.6;
+        }
+
+        /* Search Bar Setup with Voice Search */
+        .search-box { max-width: 500px; margin: 0 auto; position: relative; }
+        .search-box input {
+            width: 100%; padding: 14px 50px 14px 25px; border-radius: 30px;
+            border: 1px solid #333; background: rgba(0,0,0,0.8);
+            color: #fff; font-size: 15px; outline: none; transition: 0.3s;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .search-box input:focus {
+            border-color: var(--cine-red); box-shadow: 0 0 15px rgba(229, 9, 20, 0.4), inset 0 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .search-box i.fa-microphone {
+            position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+            color: #aaa; cursor: pointer; transition: 0.3s; font-size: 18px; z-index: 15;
+        }
+        .search-box i.fa-microphone:hover, .search-box i.fa-microphone.listening {
+            color: var(--cine-red); text-shadow: 0 0 10px var(--cine-red); transform: translateY(-50%) scale(1.1);
+        }
+
+        /* =========================================================
+           6. SUBTLE NEON BORDERS (Optimized Rendering)
+           ========================================================= */
+        .neon-border-run { position: relative; background: #000; border-radius: 8px; z-index: 1; }
+        .neon-border-run::before {
+            content: ""; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(90deg, #ff0000, var(--cine-gold), #000, #ff0000);
+            background-size: 300%; z-index: -1; border-radius: 10px;
+            animation: glowingBorder 6s linear infinite; opacity: 0.6;
+        }
+        @keyframes glowingBorder { 0% { background-position: 0 0; } 100% { background-position: 300% 0; } }
+
+        /* =========================================================
+           7. DATABASE RECENT INDEX SLIDER (MINI TOASTER)
+           ========================================================= */
+        .slider-section-title {
+            text-align: center; margin-top: 25px; font-family: var(--font-head);
+            font-size: 12px; color: var(--cine-gold); letter-spacing: 3px; font-weight: 700;
+        }
+
+        .mini-slider-container {
+            margin: 10px 0 30px; overflow: hidden; white-space: nowrap;
+            padding: 10px 0; background: rgba(0,0,0,0.3);
+            border-top: 1px solid #111; border-bottom: 1px solid #111;
+        }
+        
+        .mini-slider-track { display: inline-flex; gap: 15px; animation: slideLeft 45s linear infinite; }
+        .mini-slider-track:hover { animation-play-state: paused; }
+
+        .mini-card { width: 90px; cursor: pointer; transition: 0.3s; display: inline-block;}
+        .mini-card:hover { transform: scale(1.05); }
+
+        .mini-poster-box { width: 90px; height: 135px; position: relative; border-radius: 6px; overflow: hidden;}
+        .mini-poster-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .mini-imdb-rating {
+            position: absolute; top: 4px; left: 4px;
+            background: rgba(0,0,0,0.85); color: var(--cine-gold);
+            font-size: 9px; font-weight: bold; padding: 2px 4px; border-radius: 3px;
+            border: 1px solid rgba(245, 197, 24, 0.3);
+        }
+
+        .mini-name {
+            font-size: 10px; color: #ccc; text-align: center; margin-top: 5px; 
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+
+        @keyframes slideLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* =========================================================
+           8. GENRE SLIDER & STATUS BAR
+           ========================================================= */
+        .genre-slider {
+            display: flex; gap: 10px; overflow-x: auto;
+            padding: 5px 20px 15px; max-width: 1200px; margin: 0 auto; scrollbar-width: none; 
+        }
+        .genre-slider::-webkit-scrollbar { display: none; }
+
+        .genre-btn {
+            background: #111; color: #aaa; border: 1px solid #333;
+            padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 13px;
+            cursor: pointer; white-space: nowrap; transition: 0.3s;
+        }
+        .genre-btn:hover, .genre-btn.active {
+            background: var(--cine-red); color: #fff; border-color: var(--cine-red);
+            box-shadow: 0 0 10px rgba(229, 9, 20, 0.4);
+        }
+
+        .status-bar {
+            display: flex; justify-content: center; align-items: center; gap: 15px;
+            max-width: 1200px; margin: 15px auto 25px; padding: 0 20px;
+        }
+
+        .status-btn {
+            padding: 8px 16px; border-radius: 6px; font-family: var(--font-head);
+            font-weight: 700; font-size: 11px; text-transform: uppercase; color: #fff;
+            text-align: center; display: inline-block; letter-spacing: 1px;
+        }
+
+        .status-btn.left-info { background: #1a1a1a; border: 1px solid #333; cursor: default; }
+        .status-btn.right-save { background: #000; cursor: pointer; transition: 0.3s; }
+        .status-btn.right-save:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.5);}
+
+        /* =========================================================
+           9. MAIN GRID & BLACK INFO BOX
+           ========================================================= */
+        .main-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px; max-width: 1400px; margin: 0 auto 40px; padding: 0 20px; position: relative; z-index: 2;
+        }
+
+        .movie-card {
+            background: var(--cine-dark); border-radius: 8px; overflow: hidden;
+            display: flex; flex-direction: column; cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s; position: relative;
+        }
+        .movie-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.9); }
+
+        .poster-container { width: 100%; aspect-ratio: 2/3; position: relative; background: #111; }
+        .poster-container img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
+        .poster-container img[loading] { opacity: 0; }
+        .poster-container img.loaded { opacity: 1; }
+
+        .main-imdb {
+            position: absolute; top: 8px; right: 8px;
+            background: var(--cine-gold); color: #000; font-weight: 900;
+            padding: 3px 6px; border-radius: 4px; font-size: 11px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5); z-index: 5;
+        }
+
+        .black-info-box {
+            background: linear-gradient(180deg, #111 0%, #000 100%);
+            padding: 12px 10px 10px; border-top: 1px solid #222;
+            text-align: center; flex-grow: 1; position: relative;
+        }
+
+        /* Action Buttons overlay */
+        .share-btn, .save-heart {
+            position: absolute; top: -18px; width: 35px; height: 35px; 
+            background: #111; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            color: #fff; font-size: 14px; border: 2px solid #333;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.8); transition: 0.3s; z-index: 10;
+        }
+        .share-btn { left: 10px; }
+        .share-btn:hover { color: var(--cine-neon); border-color: var(--cine-neon); transform: scale(1.1); }
+        
+        .save-heart { right: 10px; font-size: 15px; }
+        .save-heart:hover, .save-heart.saved { color: var(--cine-red); border-color: var(--cine-red); transform: scale(1.1); }
+
+        .info-name {
+            font-size: 13px; font-weight: 700; color: #eaeaea; margin-bottom: 4px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 5px;
+        }
+        .info-year { font-size: 11px; color: #888; margin-bottom: 5px; }
+        .info-quality {
+            display: inline-block; background: #222; border: 1px solid #444;
+            padding: 2px 6px; font-size: 9px; font-weight: 800; color: var(--cine-gold); border-radius: 3px;
+        }
+
+        /* =========================================================
+           10. ADVANCED SYSTEM STATES (Pagination, Offline, Toast)
+           ========================================================= */
+        .not-found-container { grid-column: 1 / -1; text-align: center; margin: 40px 0; padding: 40px; background: rgba(0,0,0,0.5); border-radius: 10px; }
+        .glowing-error {
+            font-family: var(--font-head); font-size: 24px; color: var(--cine-red);
+            text-shadow: 0 0 15px rgba(229,9,20,0.5); margin-bottom: 20px; letter-spacing: 2px;
+        }
+        .back-btn {
+            background: #fff; color: #000; padding: 10px 25px; font-size: 13px; font-weight: bold;
+            border-radius: 25px; cursor: pointer; text-decoration: none; display: inline-block;
+            transition: 0.3s; text-transform: uppercase;
+        }
+        .back-btn:hover { background: var(--cine-gold); }
+
+        .pagination { display: flex; justify-content: center; align-items: center; gap: 15px; margin: 30px 0 60px; position: relative; z-index: 5;}
+        .page-btn {
+            width: 45px; height: 45px; border-radius: 50%; background: #111;
+            border: 1px solid #444; color: #fff; font-size: 16px;
+            cursor: pointer; display: flex; justify-content: center; align-items: center; transition: 0.3s;
+        }
+        .page-btn:hover:not(:disabled) { background: var(--cine-gold); color: #000; border-color: var(--cine-gold); box-shadow: 0 0 15px rgba(245,197,24,0.4); }
+        .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .page-text { font-family: var(--font-head); font-weight: bold; color: #aaa; font-size: 14px; }
+        .page-text span { color: #fff; font-size: 18px; }
+
+        /* Floating Scroll To Top Button */
+        #scrollTopBtn {
+            position: fixed; bottom: -60px; right: 20px; width: 50px; height: 50px;
+            background: var(--cine-red); color: #fff; border: none; border-radius: 50%;
+            font-size: 20px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.3s; z-index: 999; 
+            display: flex; justify-content: center; align-items: center;
+        }
+        #scrollTopBtn.show { bottom: 30px; }
+        #scrollTopBtn:hover { transform: scale(1.1) rotate(360deg); background: var(--cine-gold); color: #000; }
+
+        /* Realtime Offline Detector Top Bar */
+        #offlineBanner {
+            position: fixed; top: 0; left: 0; width: 100%; background: var(--toast-error);
+            color: #fff; text-align: center; padding: 10px; font-weight: bold;
+            z-index: 100000; font-size: 12px; display: none; letter-spacing: 1px;
+            font-family: var(--font-head); box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Advanced Dynamic Toast Notification System */
+        #toast {
+            visibility: hidden; min-width: 250px; background-color: #222; color: #fff;
+            text-align: center; border-radius: 25px; padding: 14px 24px; position: fixed;
+            z-index: 9999; left: 50%; bottom: 30px; font-size: 13px; font-weight: bold; 
+            border: 1px solid #444; transform: translateX(-50%); 
+            opacity: 0; transition: opacity 0.5s, bottom 0.5s; box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+        }
+        #toast.show { visibility: visible; opacity: 1; bottom: 80px; }
+        #toast.success { border-color: var(--toast-success); color: var(--toast-success); }
+        #toast.error { border-color: var(--toast-error); color: var(--toast-error); }
+        #toast.info { border-color: var(--cine-neon); color: var(--cine-neon); }
+
+        footer { 
+            text-align: center; padding: 30px 20px; border-top: 1px solid #111; 
+            color: #555; font-size: 12px; background: #000; position: relative; z-index: 5;
+            letter-spacing: 1px;
+        }
+        footer span { color: var(--cine-gold); font-weight: bold; }
+        
+        @media (min-width: 600px) { .main-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); } }
+    </style>
+</head>
+<body>
+
+    <div class="stars-overlay"></div>
+
+    <div id="offlineBanner"><i class="fas fa-exclamation-triangle"></i> CRITICAL: YOU ARE CURRENTLY OFFLINE. CHECK CONNECTION.</div>
+
+    <div id="cine-loader">
+        <div class="white-core"></div>
+        <div class="loader-text">ESTABLISHING SECURE NODE CONNECTION...</div>
+    </div>
+
+    <div id="toast">System Message</div>
+
+    <header>
+        <div class="title-premium">CINESOCIETY</div>
+        <div class="sub-title">The Enterprise Master Database. Unrestricted Access to High-Quality Content.</div>
+        
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Initialize Search Protocol (Movies, Anime)..." onkeypress="handleSearch(event)">
+            <i class="fas fa-microphone" id="voiceBtn" onclick="startVoiceSearch()" title="Voice Search"></i>
+        </div>
+    </header>
+
+    <div class="slider-section-title"><i class="fas fa-bolt"></i> RECENTLY INDEXED IN DATABASE</div>
+    <div class="mini-slider-container">
+        <div class="mini-slider-track" id="databaseRecentTrack">
+            </div>
+    </div>
+
+    <div class="genre-slider" id="genreContainer">
+        <button class="genre-btn active" onclick="setCategory('All', this)">All Content</button>
+        <button class="genre-btn" onclick="setCategory('Hollywood', this)">Hollywood</button>
+        <button class="genre-btn" onclick="setCategory('Bollywood', this)">Bollywood</button>
+        <button class="genre-btn" onclick="setCategory('Tollywood', this)">Tollywood</button>
+        <button class="genre-btn" onclick="setCategory('Action', this)">Action</button>
+        <button class="genre-btn" onclick="setCategory('Romance', this)">Romance</button>
+        <button class="genre-btn" onclick="setCategory('Drama', this)">Drama</button>
+        <button class="genre-btn" onclick="setCategory('Sci-Fi', this)">Sci-Fi</button>
+        <button class="genre-btn" onclick="setCategory('Horror', this)">Horror</button>
+        <button class="genre-btn" onclick="setCategory('Anime', this)">Anime</button>
+    </div>
+
+    <div class="status-bar">
+        <div class="status-btn left-info" id="currentCategoryBtn">CURRENT DIR: ALL CONTENT</div>
+        <div class="status-btn right-save neon-border-run" onclick="toggleWatchlist()"><i class="fas fa-folder-open"></i> VIEW SAVED</div>
+    </div>
+
+    <div class="main-grid" id="mainGrid">
+        </div>
+
+    <div class="pagination" id="paginationArea">
+        <button class="page-btn" id="prevBtn" onclick="changePage(-1)" title="Previous Page"><i class="fas fa-chevron-left"></i></button>
+        <div class="page-text">NODE <span id="curPage">1</span></div>
+        <button class="page-btn" id="nextBtn" onclick="changePage(1)" title="Next Page"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <button id="scrollTopBtn" onclick="scrollToTop()" title="Return to Top"><i class="fas fa-rocket"></i></button>
+
+    <footer>
+        © 2026 <span>CINESOCIETY</span> MASTER NODE. Connected securely to MongoDB Atlas Cluster.<br>
+        Developed & Maintained by Indrajit Dey.
+    </footer>
+
+    <script>
+        /** * @constant {string} API_HF - Primary Hugging Face Server Endpoint
+         * @constant {string} API_TMDB - TMDB Visuals Resolution Key
+         * @constant {string} API_OMDB - OMDB Fallback Key
+         */
+        const API_HF = "https://indrajit124-mongodb-api.hf.space";
+        const API_TMDB = "f0c9bd61525088e74d72e936b7712ed1";
+        const API_OMDB = "3b9c99f9"; 
+        const DEFAULT_POSTER = "https://via.placeholder.com/600x900/111111/ff3333?text=CINESOCIETY+FILE";
+
+        // Application State Architecture
+        let page = 1; 
+        let mode = "grid"; 
+        let query = ""; 
+        let currentCat = "All"; 
+        let isWatchlistView = false;
+        
+        /**
+         * @description Session Memory Cache (0ms Ultra Fast Page Reloads)
+         * Stores payload of previously visited pages to eliminate redundant API calls.
+         */
+        let sessionCache = {};
+        try {
+            let data = sessionStorage.getItem('cs_page_cache_v2');
+            if(data) sessionCache = JSON.parse(data);
+        } catch(e) { console.warn("SessionCache Initializer Failed", e); }
+
+        /**
+         * @description Secure Local Storage Integration for Watchlist
+         */
+        let watchlist = [];
+        try {
+            let savedData = localStorage.getItem('cs_saved_v2');
+            if (savedData) watchlist = JSON.parse(savedData);
+        } catch (e) { console.warn("LocalStorage security restriction applied."); }
+
+        // --- SYSTEM BOOT SEQUENCE ---
+        window.onload = () => {
+            console.log("CINESOCIETY Engine Booting...");
+            loadDatabaseRecentSlider(); 
+            fetchData(); 
+            setupScrollAndNetworkListeners(); 
+        };
+
+        /**
+         * @function fetchWithTimeout
+         * @description Advanced Network Timeout Proxy (Strict Anti-Hang Framework)
+         * Prevents infinite loading on poor mobile networks.
+         * @param {string} resource - The URL to fetch
+         * @param {object} options - Fetch options including timeout duration
+         * @returns {Promise<Response>} Fetch response object
+         */
+        async function fetchWithTimeout(resource, options = {}) {
+            const { timeout = 7500 } = options; 
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), timeout);
+            try {
+                const response = await fetch(resource, { ...options, signal: controller.signal });
+                clearTimeout(id); 
+                return response;
+            } catch (error) { 
+                clearTimeout(id); 
+                throw error; 
+            }
+        }
+
+        /**
+         * @function handleSearch
+         * @description Smart Search Algorithm with Natural Language filtering
+         * @param {Event} e - Keypress event
+         */
+        function handleSearch(e) {
+            if(e.key === 'Enter') {
+                let raw = e.target.value;
+                const ignoreWords = ['hollywood', 'bollywood', 'tollywood', 'movie', 'film'];
+                let cleanQuery = raw.toLowerCase();
+                ignoreWords.forEach(w => { cleanQuery = cleanQuery.replace(new RegExp('\\b'+w+'\\b','g'), ''); });
+                
+                query = cleanQuery.trim() || raw.trim();
+                if(query === "") return;
+                
+                mode = "grid"; page = 1; isWatchlistView = false;
+                document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
+                updateStatusBtn("SEARCH RESULTS");
+                fetchData();
+            }
+        }
+
+        /**
+         * @function startVoiceSearch
+         * @description Integrates Web Speech API for hands-free querying
+         */
+        function startVoiceSearch() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                showToast("Voice Search not supported in this browser.", "error");
+                return;
+            }
+            const recognition = new SpeechRecognition();
+            const btn = document.getElementById('voiceBtn');
+            
+            recognition.onstart = () => { btn.classList.add('listening'); showToast("Listening...", "info"); };
+            recognition.onspeechend = () => { recognition.stop(); btn.classList.remove('listening'); };
+            recognition.onerror = (e) => { btn.classList.remove('listening'); showToast("Microphone error.", "error"); }
+            
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('searchInput').value = transcript;
+                query = transcript.trim();
+                mode = "grid"; page = 1; isWatchlistView = false;
+                updateStatusBtn("SEARCH RESULTS");
+                fetchData();
+            };
+            recognition.start();
+        }
+
+        /**
+         * @function setCategory
+         * @description Handles genre routing and UI state updates
+         */
+        function setCategory(cat, el) {
+            document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            currentCat = cat; mode = cat === 'All' ? 'grid' : 'discover';
+            query = ""; document.getElementById('searchInput').value = "";
+            page = 1; isWatchlistView = false;
+            updateStatusBtn(`CURRENT DIR: ${cat.toUpperCase()}`);
+            fetchData();
+        }
+
+        function updateStatusBtn(text) { document.getElementById('currentCategoryBtn').innerText = text; }
+
+        function toggleWatchlist() {
+            isWatchlistView = true; updateStatusBtn("LOCAL SAVED DIRECTORY");
+            document.getElementById('paginationArea').style.display = 'none';
+            renderWatchlist();
+        }
+
+        function resetToHome() {
+            query = ""; page = 1; mode = "grid"; isWatchlistView = false;
+            document.getElementById('searchInput').value = "";
+            document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.genre-btn').classList.add('active');
+            updateStatusBtn("CURRENT DIR: ALL CONTENT");
+            document.getElementById('paginationArea').style.display = 'flex';
+            fetchData();
+        }
+
+        /**
+         * @function fetchData
+         * @description HIGH VELOCITY PARALLEL DATA CORE & CACHE MANAGER
+         * Core orchestrator for fetching grid data.
+         */
+        async function fetchData() {
+            showLoader();
+            const grid = document.getElementById('mainGrid');
+            grid.innerHTML = '';
+            document.getElementById('paginationArea').style.display = 'flex';
+
+            const cacheKey = `${mode}_${currentCat}_${page}_${query}`;
+
+            // Check session memory cache first
+            if (sessionCache[cacheKey]) {
+                console.log(`[Cache Hit] Restoring state for: ${cacheKey}`);
+                sessionCache[cacheKey].forEach(item => createMovieCard(item.movie, item.visuals));
+                document.getElementById('curPage').innerText = page;
+                document.getElementById('prevBtn').disabled = (page === 1);
+                hideLoader();
+                return;
+            }
+
+            try {
+                let url = mode === "grid" ? 
+                    `${API_HF}/movies/main-grid?page=${page}${query ? '&search='+encodeURIComponent(query) : ''}` : 
+                    `${API_HF}/movies/discover?category=${currentCat}&page=${page}`;
+
+                console.log(`[Network Request] Fetching: ${url}`);
+                const res = await fetchWithTimeout(url, { timeout: 9500 });
+                const data = await res.json();
+                
+                document.getElementById('curPage').innerText = page;
+                document.getElementById('prevBtn').disabled = (page === 1);
+
+                if (!data.movies || data.movies.length === 0) {
+                    renderNotFound();
+                } else {
+                    // Promise.all drastically reduces load time
+                    const posterPromises = data.movies.map(async (m) => {
+                        const visuals = await fetchPoster(m.title, m.year);
+                        return { movie: m, visuals: visuals };
+                    });
+                    
+                    const resolvedMovies = await Promise.all(posterPromises);
+                    
+                    // Commit to cache layer
+                    sessionCache[cacheKey] = resolvedMovies;
+                    try { sessionStorage.setItem('cs_page_cache_v2', JSON.stringify(sessionCache)); } catch(e) {}
+                    
+                    resolvedMovies.forEach(item => createMovieCard(item.movie, item.visuals));
+                }
+            } catch (err) {
+                console.error("[Core Engine Failure]", err);
+                renderNotFound();
+                showToast("Network Error: Could not connect to Database.", "error");
+            } finally {
+                hideLoader(); 
+            }
+        }
+
+        /**
+         * @function loadDatabaseRecentSlider
+         * @description Fetches and populates the Top Marquee with the newest DB insertions
+         */
+        async function loadDatabaseRecentSlider() {
+            const track = document.getElementById('databaseRecentTrack');
+            try {
+                const res = await fetchWithTimeout(`${API_HF}/movies/main-grid?page=1`, { timeout: 7000 });
+                const data = await res.json();
+                
+                if (data.movies && data.movies.length > 0) {
+                    const recentMovies = data.movies.slice(0, 12);
+                    const posterPromises = recentMovies.map(async (m) => {
+                        const visuals = await fetchPoster(m.title, m.year);
+                        return { movie: m, visuals: visuals };
+                    });
+                    
+                    const resolvedSlider = await Promise.all(posterPromises);
+                    let html = "";
+                    
+                    resolvedSlider.forEach(item => {
+                        const m = item.movie; const v = item.visuals;
+                        const safeTitle = m.title.replace(/'/g, "\\'");
+                        html += `
+                            <div class="mini-card" onclick="goDetails('${safeTitle}', '${m.year}')">
+                                <div class="mini-poster-box neon-border-run">
+                                    <div class="mini-imdb-rating"><i class="fas fa-star"></i> ${v.rating}</div>
+                                    <img src="${v.poster}" loading="lazy" onload="this.classList.add('loaded')" alt="Poster">
+                                </div>
+                                <div class="mini-name">${m.title}</div>
+                            </div>
+                        `;
+                    });
+                    track.innerHTML = html + html; 
+                }
+            } catch(e) {
+                console.warn("[Sub-Routine Delay] Slider fetch failed.");
+                track.innerHTML = `<span style="color:#555; font-size:11px; margin-left:20px;">Synchronizing master engine...</span>`;
+            }
+        }
+
+        /**
+         * @function fetchPoster
+         * @description Multi-tier secure HTTPS resolution engine for images
+         */
+        async function fetchPoster(title, year) {
+            let res = { poster: DEFAULT_POSTER, rating: "N/A" };
+            try {
+                const tRes = await fetchWithTimeout(`https://api.themoviedb.org/3/search/movie?api_key=${API_TMDB}&query=${encodeURIComponent(title)}&year=${year}`, { timeout: 3500 });
+                const tData = await tRes.json();
+                if(tData.results && tData.results[0] && tData.results[0].poster_path) {
+                    res.poster = `https://image.tmdb.org/t/p/w500${tData.results[0].poster_path}`;
+                    res.rating = tData.results[0].vote_average.toFixed(1);
+                    return res;
+                }
+            } catch(e) {}
+            try {
+                const oRes = await fetchWithTimeout(`https://www.omdbapi.com/?t=${encodeURIComponent(title)}&y=${year}&apikey=${API_OMDB}`, { timeout: 3500 });
+                const oData = await oRes.json();
+                if(oData.Poster && oData.Poster !== "N/A") { res.poster = oData.Poster; res.rating = oData.imdbRating; }
+            } catch(e) {}
+            return res; 
+        }
+
+        /**
+         * @function createMovieCard
+         * @description Master rendering template for individual grid items
+         */
+        function createMovieCard(movie, visuals) {
+            const grid = document.getElementById('mainGrid');
+            if (!movie || !movie.title) return;
+            
+            const safeTitle = movie.title.replace(/'/g, "\\'");
+            const isSaved = watchlist.some(w => w.title === movie.title && w.year === movie.year);
+            const quality = (movie.available_qualities && movie.available_qualities.length > 0) ? movie.available_qualities[0] : "HD";
+
+            const html = `
+                <div class="movie-card neon-border-run" onclick="goDetails('${safeTitle}', '${movie.year}')">
+                    <div class="poster-container">
+                        <div class="main-imdb"><i class="fas fa-star"></i> ${visuals.rating}</div>
+                        <img src="${visuals.poster}" loading="lazy" onload="this.classList.add('loaded')" alt="Movie Poster">
+                    </div>
+                    <div class="black-info-box">
+                        <div class="share-btn" onclick="shareMovie(event, '${safeTitle}', '${movie.year}')" title="Share Movie">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="save-heart ${isSaved ? 'saved' : ''}" onclick="saveMovie(event, '${safeTitle}', '${movie.year}', '${visuals.poster}')" title="Save to Watchlist">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="info-name" title="${movie.title}">${movie.title}</div>
+                        <div class="info-year">${movie.year}</div>
+                        <div class="info-quality">${quality}</div>
+                    </div>
+                </div>
+            `;
+            grid.insertAdjacentHTML('beforeend', html);
+        }
+
+        /**
+         * @function shareMovie
+         * @description Social Link Distribution System (Web Share API with Clipboard Fallback)
+         */
+        function shareMovie(event, title, year) {
+            event.stopPropagation(); 
+            const shareUrl = `${window.location.origin}/details.html?name=${encodeURIComponent(title)}&year=${year}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: `CINESOCIETY - ${title}`,
+                    text: `Check out ${title} (${year}) on CINESOCIETY Master Database!`,
+                    url: shareUrl,
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    showToast("Movie link copied to clipboard!", "success");
+                });
+            }
+        }
+
+        function renderNotFound() {
+            document.getElementById('paginationArea').style.display = 'none';
+            document.getElementById('mainGrid').innerHTML = `
+                <div class="not-found-container">
+                    <div class="glowing-error">404: NO DATA FOUND IN SYSTEM</div>
+                    <button class="back-btn" onclick="resetToHome()"><i class="fas fa-redo"></i> RETURN TO ROOT</button>
+                </div>
+            `;
+        }
+
+        // --- WATCHLIST MANAGER ---
+        function saveMovie(e, title, year, poster) {
+            e.stopPropagation();
+            const btn = e.currentTarget;
+            const idx = watchlist.findIndex(w => w.title === title && w.year === year);
+            if(idx > -1) {
+                watchlist.splice(idx, 1); btn.classList.remove('saved');
+                showToast("Removed from local directory.", "info");
+            } else {
+                watchlist.push({title, year, poster}); btn.classList.add('saved');
+                showToast("Saved. The file is saved.", "success");
+            }
+            try { localStorage.setItem('cs_saved_v2', JSON.stringify(watchlist)); } catch(err) {}
+        }
+
+        function renderWatchlist() {
+            const grid = document.getElementById('mainGrid');
+            grid.innerHTML = '';
+            if(watchlist.length === 0) {
+                grid.innerHTML = `
+                    <div class="not-found-container">
+                        <div class="glowing-error">YOUR WATCHLIST IS EMPTY</div>
+                        <button class="back-btn" onclick="resetToHome()">GO BACK</button>
+                    </div>`;
+                return;
+            }
+            watchlist.forEach(w => {
+                createMovieCard({title: w.title, year: w.year, available_qualities: ["SAVED"]}, {poster: w.poster, rating: "Fav"});
+            });
+        }
+
+        // --- UTILITIES & ANIMATIONS ---
+        
+        /**
+         * @function showToast
+         * @description Advanced Notification UI Manager
+         * @param {string} msg - The message to display
+         * @param {string} type - 'success', 'error', 'info'
+         */
+        function showToast(msg, type = "success") {
+            const toast = document.getElementById("toast");
+            toast.innerText = msg;
+            toast.className = `show ${type}`;
+            setTimeout(() => { toast.className = ""; }, 3000);
+        }
+
+        function changePage(dir) { 
+            page += dir; fetchData(); 
+            window.scrollTo({ top: 0, behavior: 'smooth' }); 
+        }
+        
+        function goDetails(title, year) { 
+            window.location.href = `details.html?name=${encodeURIComponent(title)}&year=${year}`; 
+        }
+        
+        function showLoader() { 
+            const loader = document.getElementById('cine-loader');
+            if(loader) { loader.style.opacity = '1'; loader.style.visibility = 'visible'; }
+        }
+        function hideLoader() { 
+            const loader = document.getElementById('cine-loader');
+            if(loader) {
+                setTimeout(() => { 
+                    loader.style.opacity = '0'; 
+                    setTimeout(() => loader.style.visibility = 'hidden', 400); 
+                }, 200); 
+            }
+        }
+
+        // --- DEVICE SENSORS & SYSTEM LISTENERS ---
+        function setupScrollAndNetworkListeners() {
+            const btn = document.getElementById('scrollTopBtn');
+            const offlineBanner = document.getElementById('offlineBanner');
+            
+            // Scroll Sensor
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 350) { btn.classList.add('show'); } 
+                else { btn.classList.remove('show'); }
+            });
+            
+            // Network Telemetry
+            window.addEventListener('offline', () => { 
+                offlineBanner.style.display = 'block'; 
+                showToast("Connection Lost", "error");
+            });
+            window.addEventListener('online', () => { 
+                offlineBanner.style.display = 'none';
+                showToast("Connection Restored", "success");
+            });
+            
+            if(!navigator.onLine) { offlineBanner.style.display = 'block'; }
+        }
+
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
+</body>
+</html>
