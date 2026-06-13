@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CINESOCIETY | Movie Info</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-ultra-dark: #020205;
+            --bg-panel: rgba(10, 10, 15, 0.9);
+            --border-glass: 1px solid rgba(0, 229, 255, 0.15);
+            --neon-blue: #00e5ff;
+            --neon-red: #ff003c;
+        }
+        
+        body {
+            margin: 0; background-color: var(--bg-ultra-dark); color: #fff;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Hero Banner with Poster Blur */
+        .hero-banner {
+            height: 40vh; width: 100%; position: relative;
+            background: url('https://via.placeholder.com/800x600/0a0a0f/333?text=Backdrop') center/cover;
+        }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(0deg, var(--bg-ultra-dark) 0%, rgba(2,2,5,0.4) 100%);
+        }
+        
+        .back-nav {
+            position: absolute; top: 20px; left: 20px; z-index: 10;
+            background: rgba(0,0,0,0.5); border: var(--border-glass); border-radius: 50%;
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            color: #fff; text-decoration: none; backdrop-filter: blur(5px);
+        }
+
+        /* Movie Details Section */
+        .info-container {
+            padding: 20px; position: relative; z-index: 5; margin-top: -60px;
+        }
+
+        .main-title { font-family: 'Cinzel', serif; font-size: 2rem; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .meta-tags { display: flex; gap: 10px; margin: 10px 0; font-size: 0.8rem; flex-wrap: wrap; }
+        .tag { background: rgba(0, 229, 255, 0.1); border: 1px solid var(--neon-blue); padding: 4px 10px; border-radius: 4px; color: var(--neon-blue); }
+        .tag.rating { border-color: #f5c518; color: #f5c518; }
+
+        .plot-box {
+            background: var(--bg-panel); border: var(--border-glass); border-radius: 12px;
+            padding: 20px; margin-top: 20px; line-height: 1.6; color: #ccc; font-size: 0.9rem;
+        }
+        .plot-box h3 { color: #fff; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="hero-banner">
+        <div class="hero-overlay"></div>
+        <a href="details.html" class="back-nav"><i class="fas fa-arrow-left"></i></a>
+    </div>
+
+    <div class="info-container">
+        <h1 class="main-title">Movie Title</h1>
+        
+        <div class="meta-tags">
+            <span class="tag rating"><i class="fas fa-star"></i> 8.5/10</span>
+            <span class="tag">2025</span>
+            <span class="tag">Action / Thriller</span>
+            <span class="tag">2h 15m</span>
+        </div>
+
+        <div class="plot-box">
+            <h3>Synopsis</h3>
+            <p>This is the detailed information page hosted securely within the CINESOCIETY app environment. All data fetched from your APIs will perfectly render here, providing a seamless user experience without redirecting to any external browsers.</p>
+        </div>
+    </div>
+
+</body>
+</html>
