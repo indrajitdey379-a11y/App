@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#020205">
+    <meta name="description" content="CINESOCIETY REBORN - Download Manager">
+    <title>CINESOCIETY | Download Manager</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;500;700;900&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-ultra-dark: #020205;
+            --bg-card-glass: rgba(18, 18, 25, 0.8);
+            --bg-panel: rgba(10, 10, 15, 0.95);
+            --border-glass: 1px solid rgba(0, 229, 255, 0.15);
+            --neon-blue: #00e5ff;
+            --neon-red: #ff003c;
+            --text-main: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+        
+        body {
+            background-color: var(--bg-ultra-dark);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* No scroll on the main body */
+        }
+
+        /* Header */
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(180deg, #0a0a0f 0%, transparent 100%);
+            border-bottom: var(--border-glass);
+        }
+        .header h1 { font-family: 'Cinzel', serif; color: var(--neon-blue); font-size: 1.5rem; }
+
+        /* Main Content Area */
+        .content-area {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            padding-bottom: 80px; /* Space for bottom nav */
+        }
+
+        /* Active Download Section (No Scroll Area inside) */
+        .active-download {
+            background: var(--bg-card-glass);
+            border: var(--border-glass);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.1);
+        }
+
+        .dl-header { font-family: 'Orbitron', sans-serif; color: var(--neon-red); font-size: 0.9rem; margin-bottom: 10px; }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0,0,0,0.4);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .file-info-wrapper { display: flex; align-items: center; gap: 12px; }
+        
+        .tmdb-logo {
+            width: 40px; height: 60px;
+            background: url('https://via.placeholder.com/40x60/0a0a0f/00e5ff?text=TMDB') center/cover;
+            border-radius: 4px;
+        }
+
+        .file-details h3 { font-size: 0.95rem; font-weight: 700; color: #fff; }
+        .file-details p { font-size: 0.75rem; color: #aaa; margin-top: 3px; }
+
+        .three-dot-btn {
+            background: none; border: none; color: #fff;
+            font-size: 1.2rem; cursor: pointer; padding: 5px;
+        }
+
+        /* Progress Bar */
+        .progress-container { width: 100%; background: #222; border-radius: 10px; height: 8px; margin-top: 10px; overflow: hidden; }
+        .progress-bar { width: 45%; background: var(--neon-blue); height: 100%; border-radius: 10px; transition: 0.3s; }
+        .speed-info { display: flex; justify-content: space-between; font-size: 0.7rem; color: #888; margin-top: 5px; font-family: 'Share Tech Mono', monospace; }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: var(--bg-panel);
+            border-top: var(--border-glass);
+            display: flex; justify-content: space-around; align-items: center;
+            height: 65px; z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            color: #666; text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 0.75rem; gap: 5px; transition: 0.3s;
+        }
+        .nav-item i { font-size: 1.3rem; }
+        .nav-item.active { color: var(--neon-blue); text-shadow: 0 0 10px rgba(0, 229, 255, 0.5); }
+        .nav-item.home-btn { color: #fff; } /* Special Home Button */
+
+        /* 3-Dot Menu Dropdown (Hidden by default) */
+        .dropdown-menu {
+            display: none; position: absolute; right: 20px; margin-top: 10px;
+            background: var(--bg-panel); border: var(--border-glass); border-radius: 8px;
+            padding: 10px; z-index: 100;
+        }
+        .dropdown-menu.show { display: block; }
+        .dropdown-menu button { background: none; border: none; color: #fff; font-family: 'Montserrat'; width: 100%; text-align: left; padding: 8px; cursor: pointer; }
+        .dropdown-menu button:hover { color: var(--neon-blue); }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>DOWNLOADS</h1>
+    </div>
+
+    <div class="content-area">
+        <div class="active-download">
+            <div class="dl-header"><i class="fas fa-spinner fa-spin"></i> DOWNLOADING...</div>
+            <div class="file-item">
+                <div class="file-info-wrapper">
+                    <div class="tmdb-logo"></div>
+                    <div class="file-details">
+                        <h3>Housefull 5</h3>
+                        <p>2025 • 1080p WEB-DL</p>
+                    </div>
+                </div>
+                <div>
+                    <button class="three-dot-btn" onclick="toggleMenu('menu1')"><i class="fas fa-ellipsis-v"></i></button>
+                    <div id="menu1" class="dropdown-menu">
+                        <button onclick="saveToFileManager()"><i class="fas fa-save"></i> Save to File Manager</button>
+                        <button style="color: var(--neon-red);"><i class="fas fa-times"></i> Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <div class="progress-container"><div class="progress-bar" id="pBar"></div></div>
+            <div class="speed-info">
+                <span>4.2 MB/s</span>
+                <span id="pText">45% • 2 mins left</span>
+            </div>
+        </div>
+
+        <div class="active-download" style="opacity: 0.8;">
+            <div class="dl-header" style="color: #00e5ff;"><i class="fas fa-check-circle"></i> COMPLETED</div>
+            
+            <div class="file-item">
+                <div class="file-info-wrapper">
+                    <div class="tmdb-logo" style="background-image: url('https://via.placeholder.com/40x60/0a0a0f/fff?text=H2');"></div>
+                    <div class="file-details">
+                        <h3>Housefull 2</h3>
+                        <p>2012 • 720p BluRay</p>
+                    </div>
+                </div>
+                <div>
+                    <button class="three-dot-btn" onclick="toggleMenu('menu2')"><i class="fas fa-ellipsis-v"></i></button>
+                    <div id="menu2" class="dropdown-menu">
+                        <button onclick="saveToFileManager()"><i class="fas fa-sd-card"></i> Save to Memory</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="#" class="nav-item">
+            <i class="fas fa-bars"></i>
+            <span>Menu</span>
+        </a>
+        <a href="main-grid.html" class="nav-item home-btn">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="downloads.html" class="nav-item active">
+            <i class="fas fa-download"></i>
+            <span>Downloads</span>
+        </a>
+    </div>
+
+    <script>
+        function toggleMenu(id) {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                if(menu.id !== id) menu.classList.remove('show');
+            });
+            document.getElementById(id).classList.toggle('show');
+        }
+
+        function saveToFileManager() {
+            alert("Saving to File Manager/Phone Memory...");
+            // Capacitor Filesystem plugin code will integrate here later
+            document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+        }
+
+        // Simulating Download Progress
+        let progress = 45;
+        setInterval(() => {
+            if(progress < 100) {
+                progress += Math.random() * 2;
+                if(progress > 100) progress = 100;
+                document.getElementById('pBar').style.width = `${progress}%`;
+                document.getElementById('pText').innerText = `${Math.floor(progress)}% • Just a moment...`;
+            }
+        }, 1500);
+    </script>
+</body>
+</html>
