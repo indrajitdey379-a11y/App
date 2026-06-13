@@ -119,7 +119,7 @@
         .plot-container { font-size: 0.95rem; color: #ccc; line-height: 1.8; text-align: justify; padding: 20px; background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px solid #222; margin-bottom: 30px; }
 
         /* ==========================================================================
-           7. ADVANCED CAST & CREW SLIDER (NEW HUGE FEATURE)
+           7. ADVANCED CAST & CREW SLIDER
            ========================================================================== */
         .section-headline { font-size: 1.5rem; font-weight: 900; text-transform: uppercase; margin: 40px 0 20px 0; display: flex; align-items: center; gap: 12px; color: #fff; border-bottom: 2px solid #222; padding-bottom: 10px; }
         .section-headline i { color: var(--neon-cyan); font-size: 1.8rem; }
@@ -140,7 +140,7 @@
         .btn-youtube:hover { transform: scale(1.08) translateY(-5px); box-shadow: 0 15px 40px rgba(255, 0, 0, 0.6); }
 
         /* ==========================================================================
-           9. MASSIVE FILE VAULT (SCROLL ANIMATED & STRUCTURED)
+           9. MASSIVE FILE VAULT
            ========================================================================== */
         .master-vault-grid { display: flex; flex-direction: column; gap: 25px; }
         
@@ -157,7 +157,6 @@
 
         .node-title { font-size: 1.2rem; font-weight: 900; color: var(--text-primary); margin-bottom: 15px; padding-right: 80px; line-height: 1.4; }
 
-        /* The Separate Field Matrix */
         .field-matrix { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; background: #000; padding: 15px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--neon-cyan); }
         .f-box { display: flex; flex-direction: column; background: #08080c; padding: 8px; border-radius: 8px; border: 1px solid #1a1a24; }
         .f-lbl { font-size: 0.65rem; color: #777; text-transform: uppercase; font-weight: 900; letter-spacing: 1px; margin-bottom: 3px; }
@@ -317,7 +316,7 @@
             document.getElementById('pingVal').innerText = `${ping}ms`;
         }, 2000);
 
-        // 3. INTERACTIVE PARTICLE ENGINE (Massive Addition)
+        // 3. INTERACTIVE PARTICLE ENGINE
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -355,7 +354,7 @@
         initParticles(); animateParticles();
         window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; initParticles(); });
 
-        // 4. MASTER BOOT SEQUENCE (Ultra Fast)
+        // 4. MASTER BOOT SEQUENCE
         document.addEventListener('DOMContentLoaded', async () => {
             if(!Q_NAME) return alert("System Halted: Missing Target Data.");
 
@@ -391,7 +390,7 @@
                 const sortedFiles = advancedFileSorter(data.files_data);
                 renderEnterpriseVault(sortedFiles, data.movie_title);
                 
-                // Trigger TMDB Visuals & Cast Fetch (Non-blocking)
+                // Trigger TMDB Visuals & Cast Fetch
                 fetchTMDBAssets(data.movie_title, data.release_year);
 
             } catch(e) {
@@ -400,7 +399,7 @@
             }
         });
 
-        // 5. ADVANCED SORTING ALGORITHM (Res > Season > Ep > Part)
+        // 5. ADVANCED SORTING ALGORITHM
         function getResTier(res) {
             if(!res) return 999; let r = res.toLowerCase();
             if(r.includes("480")) return 1; if(r.includes("720")) return 2;
@@ -433,7 +432,15 @@
 
             files.forEach(f => {
                 const s = (v) => (v && v!=="null" && v!=="N/A") ? v : "-";
+                
+                // === BUTTON LINK LOGIC UPDATED HERE ===
+                // Routing Telegram correctly to the bot
                 const tgLink = `https://t.me/${ENV.BOT}?start=${f.file_id}`;
+                
+                // Routing to in-app HTML pages
+                const streamUrl = `stream.html`; 
+                const downloadUrl = `downloads.html`;
+                const infoUrl = `info.html`;
 
                 const html = `
                 <div class="data-node">
@@ -453,10 +460,10 @@
                     </div>
 
                     <div class="node-actions">
-                        <a href="${f.stream_link}" target="_blank" class="n-btn b-play"><i class="fas fa-play"></i> Play</a>
-                        <a href="${f.download_link}" target="_blank" class="n-btn b-dl"><i class="fas fa-download"></i> Download</a>
+                        <a href="${streamUrl}" class="n-btn b-play"><i class="fas fa-play"></i> Play</a>
+                        <a href="${downloadUrl}" class="n-btn b-dl"><i class="fas fa-download"></i> Download</a>
                         <a href="${tgLink}" target="_blank" class="n-btn b-tg"><i class="fab fa-telegram-plane"></i> Get File</a>
-                        <a href="${f.info_link}" target="_blank" class="n-btn b-inf"><i class="fas fa-info"></i> Info</a>
+                        <a href="${infoUrl}" class="n-btn b-inf"><i class="fas fa-info"></i> Info</a>
                     </div>
                 </div>`;
                 vault.insertAdjacentHTML('beforeend', html);
@@ -490,7 +497,7 @@
                         }
                     });
 
-                    // B. Cast Slider (New Feature)
+                    // B. Cast Slider
                     fetch(`https://api.themoviedb.org/3/movie/${mId}/credits?api_key=${ENV.TMDB}`).then(r=>r.json()).then(cData => {
                         const slider = document.getElementById('castSlider');
                         slider.innerHTML = '';
