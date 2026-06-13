@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CINESOCIETY | Stream Node</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root { --neon-blue: #00e5ff; --bg-ultra-dark: #000; }
+        body {
+            margin: 0; padding: 0; background-color: var(--bg-ultra-dark); color: #fff;
+            font-family: 'Montserrat', sans-serif; display: flex; flex-direction: column; height: 100vh;
+        }
+        
+        /* Top Action Bar */
+        .stream-header {
+            position: absolute; top: 0; width: 100%; padding: 15px 20px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.9), transparent);
+            display: flex; align-items: center; justify-content: space-between; z-index: 10;
+        }
+        
+        .back-btn { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+        .now-playing { font-family: 'Orbitron', sans-serif; color: var(--neon-blue); font-size: 0.9rem; }
+
+        /* Video Player Container */
+        .player-wrapper {
+            flex: 1; display: flex; justify-content: center; align-items: center; background: #000;
+        }
+        
+        video { width: 100%; max-height: 100vh; outline: none; }
+    </style>
+</head>
+<body>
+
+    <div class="stream-header">
+        <button class="back-btn" onclick="history.back()"><i class="fas fa-arrow-left"></i></button>
+        <div class="now-playing"><i class="fas fa-play-circle"></i> SECURE STREAM</div>
+        <div style="width: 24px;"></div> </div>
+
+    <div class="player-wrapper">
+        <video id="cinePlayer" controls autoplay controlsList="nodownload">
+            <source src="YOUR_STREAM_LINK_HERE.mp4" type="video/mp4">
+            Your browser/app does not support HTML5 video.
+        </video>
+    </div>
+
+</body>
+</html>
