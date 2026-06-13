@@ -3,81 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CINESOCIETY | Movie Info</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>CINESOCIETY | Meta Information Node</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        :root {
-            --bg-ultra-dark: #020205;
-            --bg-panel: rgba(10, 10, 15, 0.9);
-            --border-glass: 1px solid rgba(0, 229, 255, 0.15);
-            --neon-blue: #00e5ff;
-            --neon-red: #ff003c;
-        }
+        :root { --bg-master: #020205; --neon-blue: #00e5ff; --neon-red: #ff003c; --panel-bg: rgba(15, 15, 20, 0.8); }
+        body { margin: 0; background-color: var(--bg-master); color: #fff; font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+
+        /* Massive Hero Section */
+        .hero-banner { height: 50vh; position: relative; background: url('https://via.placeholder.com/1200x800/111/333?text=Cinematic+Backdrop') center/cover no-repeat; background-attachment: fixed; }
+        .hero-gradient { position: absolute; inset: 0; background: linear-gradient(0deg, var(--bg-master) 0%, rgba(2,2,5,0.6) 50%, rgba(0,0,0,0.9) 100%); }
         
-        body {
-            margin: 0; background-color: var(--bg-ultra-dark); color: #fff;
-            font-family: 'Montserrat', sans-serif;
-        }
+        .header-nav { position: absolute; top: 0; width: 100%; padding: 20px; display: flex; justify-content: space-between; z-index: 10; }
+        .nav-btn { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); width: 45px; height: 45px; border-radius: 50%; color: #fff; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; text-decoration: none; backdrop-filter: blur(5px); }
 
-        /* Hero Banner with Poster Blur */
-        .hero-banner {
-            height: 40vh; width: 100%; position: relative;
-            background: url('https://via.placeholder.com/800x600/0a0a0f/333?text=Backdrop') center/cover;
-        }
-        .hero-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(0deg, var(--bg-ultra-dark) 0%, rgba(2,2,5,0.4) 100%);
-        }
+        /* Master Info Container */
+        .info-core { position: relative; z-index: 5; margin-top: -15vh; padding: 0 20px 40px; max-width: 1000px; margin-left: auto; margin-right: auto; }
         
-        .back-nav {
-            position: absolute; top: 20px; left: 20px; z-index: 10;
-            background: rgba(0,0,0,0.5); border: var(--border-glass); border-radius: 50%;
-            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
-            color: #fff; text-decoration: none; backdrop-filter: blur(5px);
-        }
+        .title-matrix { text-align: center; margin-bottom: 30px; }
+        .main-title { font-family: 'Cinzel', serif; font-size: 3rem; font-weight: 900; text-shadow: 0 5px 20px rgba(0,0,0,0.9); margin-bottom: 10px; }
+        .meta-badges { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .badge { background: rgba(0, 229, 255, 0.1); border: 1px solid var(--neon-blue); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; color: var(--neon-blue); letter-spacing: 1px; }
+        .badge.rating { background: rgba(245, 197, 24, 0.1); border-color: #f5c518; color: #f5c518; }
 
-        /* Movie Details Section */
-        .info-container {
-            padding: 20px; position: relative; z-index: 5; margin-top: -60px;
-        }
+        /* Interactive Tab System */
+        .tab-menu { display: flex; overflow-x: auto; gap: 15px; padding: 10px 0; border-bottom: 1px solid #222; margin-bottom: 25px; scrollbar-width: none; }
+        .tab-menu::-webkit-scrollbar { display: none; }
+        .tab-btn { background: none; border: none; color: #888; font-family: 'Montserrat'; font-size: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; padding-bottom: 10px; white-space: nowrap; transition: 0.3s; }
+        .tab-btn.active { color: #fff; border-bottom: 3px solid var(--neon-red); text-shadow: 0 0 10px var(--neon-red); }
 
-        .main-title { font-family: 'Cinzel', serif; font-size: 2rem; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-        .meta-tags { display: flex; gap: 10px; margin: 10px 0; font-size: 0.8rem; flex-wrap: wrap; }
-        .tag { background: rgba(0, 229, 255, 0.1); border: 1px solid var(--neon-blue); padding: 4px 10px; border-radius: 4px; color: var(--neon-blue); }
-        .tag.rating { border-color: #f5c518; color: #f5c518; }
+        /* Data Panels */
+        .data-panel { display: none; background: var(--panel-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: 15px; padding: 25px; line-height: 1.8; color: #ccc; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: fadeIn 0.5s ease; }
+        .data-panel.active { display: block; }
+        
+        /* Telegram API Section */
+        .tg-api-box { background: #08080c; border-left: 4px solid var(--neon-blue); padding: 15px; border-radius: 8px; font-family: 'Share Tech Mono', monospace; margin-bottom: 15px; }
+        .tg-role { color: var(--neon-red); font-weight: bold; }
+        .tg-cmd { color: var(--neon-blue); font-size: 1.1rem; }
+        .tg-desc { display: block; font-size: 0.8rem; color: #777; margin-top: 5px; font-family: 'Montserrat'; }
 
-        .plot-box {
-            background: var(--bg-panel); border: var(--border-glass); border-radius: 12px;
-            padding: 20px; margin-top: 20px; line-height: 1.6; color: #ccc; font-size: 0.9rem;
-        }
-        .plot-box h3 { color: #fff; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
-
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <div class="hero-banner">
-        <div class="hero-overlay"></div>
-        <a href="details.html" class="back-nav"><i class="fas fa-arrow-left"></i></a>
-    </div>
-
-    <div class="info-container">
-        <h1 class="main-title">Movie Title</h1>
-        
-        <div class="meta-tags">
-            <span class="tag rating"><i class="fas fa-star"></i> 8.5/10</span>
-            <span class="tag">2025</span>
-            <span class="tag">Action / Thriller</span>
-            <span class="tag">2h 15m</span>
-        </div>
-
-        <div class="plot-box">
-            <h3>Synopsis</h3>
-            <p>This is the detailed information page hosted securely within the CINESOCIETY app environment. All data fetched from your APIs will perfectly render here, providing a seamless user experience without redirecting to any external browsers.</p>
+        <div class="hero-gradient"></div>
+        <div class="header-nav">
+            <a href="#" onclick="history.back()" class="nav-btn"><i class="fas fa-arrow-left"></i></a>
+            <a href="#" class="nav-btn" style="border-color: var(--neon-red); color: var(--neon-red);"><i class="fas fa-heart"></i></a>
         </div>
     </div>
 
+    <div class="info-core">
+        <div class="title-matrix">
+            <h1 class="main-title">ENTERPRISE TITLE</h1>
+            <div class="meta-badges">
+                <span class="badge rating"><i class="fas fa-star"></i> 8.9/10</span>
+                <span class="badge">2025</span>
+                <span class="badge">4K HDR</span>
+                <span class="badge">DUAL AUDIO</span>
+            </div>
+        </div>
+
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="openTab('synopsis')">Synopsis</button>
+            <button class="tab-btn" onclick="openTab('tech')">Tech Specs</button>
+            <button class="tab-btn" onclick="openTab('api')">Bot API</button>
+        </div>
+
+        <div id="synopsis" class="data-panel active">
+            <h3 style="color:#fff; margin-bottom:15px; font-family:'Cinzel'; border-bottom:1px solid #333; padding-bottom:10px;">Official Database Summary</h3>
+            <p>This is the ultimate, massive details page generated directly within the app's WebView. The metadata presented here is fetched securely from the Hugging Face / MongoDB backend cluster. No external browser is required. Everything you see is seamlessly integrated into the application interface designed by Indrajit Dey.</p>
+        </div>
+
+        <div id="tech" class="data-panel">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div><strong style="color:var(--neon-blue);">Video Codec:</strong> <br>HEVC / H.265 10-bit</div>
+                <div><strong style="color:var(--neon-blue);">Audio Protocol:</strong> <br>Dolby Atmos TrueHD 7.1</div>
+                <div><strong style="color:var(--neon-blue);">Subtitle:</strong> <br>English, Bengali (Muxed)</div>
+                <div><strong style="color:var(--neon-blue);">File Integrity:</strong> <br>Verified 100% SHA-256</div>
+            </div>
+        </div>
+
+        <div id="api" class="data-panel">
+            <h3 style="color:#fff; margin-bottom:15px; font-family:'Cinzel'; border-bottom:1px solid #333; padding-bottom:10px;">Telegram Node Commands</h3>
+            
+            <div class="tg-api-box">
+                <span class="tg-role">[Member]</span> <span class="tg-cmd">/start &lt;file_id&gt;</span>
+                <span class="tg-desc">Initializes the bot and retrieves the specific secure file without interfering with general indexing logic.</span>
+            </div>
+
+            <div class="tg-api-box">
+                <span class="tg-role">[Member]</span> <span class="tg-cmd">/get_movie &lt;name&gt;</span>
+                <span class="tg-desc">Triggers the Auto Filter Bot logic to scan the MongoDB cluster and return available qualities.</span>
+            </div>
+
+            <div class="tg-api-box" style="border-left-color: var(--neon-red);">
+                <span class="tg-role">[Admin]</span> <span class="tg-cmd">/index_db</span>
+                <span class="tg-desc">Restricted. Forces a manual sync between Telegram Server files and MongoDB via Pyrogram backend.</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function openTab(tabId) {
+            document.querySelectorAll('.data-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
 </body>
 </html>
