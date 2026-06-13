@@ -25,7 +25,7 @@ jobs:
           rm -rf www/www www/.git www/.github
           npm init -y
           npm install @capacitor/core@latest @capacitor/cli@latest
-          npx cap init "My Movie App" "com.indra.movieapp" --web-dir www
+          npx cap init "MOVIE HOUSE" "com.indra.movieapp" --web-dir www
 
       - name: Add Android Platform
         run: |
